@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "FRITZ!Box DOCSIS",
-        "description": "Verbindung zur FRITZ!Box herstellen",
+        "description": "DOCSIS Monitoring konfigurieren",
         "data": {
-          "host": "IP-Adresse",
+          "host": "FRITZ!Box IP-Adresse",
           "username": "Benutzername",
           "password": "Passwort",
-          "scan_interval": "Aktualisierungsintervall"
+          "scan_interval": "Aktualisierung"
         }
       }
     }

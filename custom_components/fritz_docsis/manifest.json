@@ -1,13 +1,17 @@
 {
   "domain": "fritz_docsis",
   "name": "FRITZ!Box DOCSIS Monitor",
-  "version": "0.0.1",
-  "documentation": "https://github.com/deinname/fritz_docsis",
-  "dependencies": [],
-  "codeowners": ["@gunnarneuendorf"],
-  "requirements": [
-    "beautifulsoup4>=4.12.2"
-  ],
+  "version": "2026.5.0",
+  "documentation": "https://github.com/morbeth/fritz_docsis",
+  "issue_tracker": "https://github.com/morbeth/fritz_docsis/issues",
+  "codeowners": ["@morbeth"],
   "config_flow": true,
-  "iot_class": "local_polling"
+  "iot_class": "local_polling",
+  "integration_type": "device",
+  "requirements": [
+    "beautifulsoup4>=4.12.3"
+  ],
+  "loggers": [
+    "custom_components.fritz_docsis"
+  ]
 }
