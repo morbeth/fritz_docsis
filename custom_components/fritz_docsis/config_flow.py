@@ -5,9 +5,13 @@ from homeassistant import config_entries
 from .const import DOMAIN
 
 
-class FritzDocsisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class FritzDocsisConfigFlow(
+    config_entries.ConfigFlow,
+    domain=DOMAIN,
+):
 
     VERSION = 1
+    MINOR_VERSION = 1
 
     async def async_step_user(self, user_input=None):
 
@@ -18,16 +22,26 @@ class FritzDocsisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=user_input,
             )
 
-        schema = vol.Schema(
-            {
-                vol.Required("host", default="192.168.178.1"): str,
-                vol.Optional("username", default=""): str,
-                vol.Required("password"): str,
-                vol.Required("scan_interval", default=300): int,
-            }
-        )
-
         return self.async_show_form(
             step_id="user",
-            data_schema=schema,
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        "host",
+                        default="192.168.178.1",
+                    ): str,
+
+                    vol.Optional(
+                        "username",
+                        default="",
+                    ): str,
+
+                    vol.Required("password"): str,
+
+                    vol.Required(
+                        "scan_interval",
+                        default=300,
+                    ): int,
+                }
+            ),
         )
