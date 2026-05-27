@@ -1,0 +1,16 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "FRITZ!Box DOCSIS",
+        "description": "Verbindung zur FRITZ!Box herstellen",
+        "data": {
+          "host": "IP-Adresse",
+          "username": "Benutzername",
+          "password": "Passwort",
+          "scan_interval": "Aktualisierungsintervall"
+        }
+      }
+    }
+  }
+}

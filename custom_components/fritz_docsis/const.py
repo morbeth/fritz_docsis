@@ -1,0 +1,3 @@
+DOMAIN = "fritz_docsis"
+
+DEFAULT_SCAN_INTERVAL = 300

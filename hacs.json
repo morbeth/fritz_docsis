@@ -1,0 +1,8 @@
+{
+  "name": "FRITZ!Box DOCSIS Monitor",
+  "content_in_root": false,
+  "domains": ["fritz_docsis"],
+  "country": ["DE"],
+  "homeassistant": "2024.1.0",
+  "render_readme": true
+}

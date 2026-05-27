@@ -1,0 +1,13 @@
+{
+  "domain": "fritz_docsis",
+  "name": "FRITZ!Box DOCSIS Monitor",
+  "version": "0.0.1",
+  "documentation": "https://github.com/deinname/fritz_docsis",
+  "dependencies": [],
+  "codeowners": ["@gunnarneuendorf"],
+  "requirements": [
+    "beautifulsoup4>=4.12.2"
+  ],
+  "config_flow": true,
+  "iot_class": "local_polling"
+}
