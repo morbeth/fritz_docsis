@@ -1,4 +1,27 @@
 import hashlib
+import re
+
+import requests
+from bs4 import BeautifulSoup
+
+
+class FritzDocsis:
+
+    def __init__(
+        self,
+        host,
+        username,
+        password,
+    ):
+
+        self.host = host
+        self.username = username
+        self.password = password
+
+    def _get_sid(self):
+
+        response = requests.get(
+            f"http://{self.host}/login_sid.lua",
             timeout=10,
         )
 
@@ -7,9 +30,17 @@ import hashlib
             response.text,
         ).group(1)
 
-        challenge_response = challenge + "-" + hashlib.md5(
-            (challenge + "-" + self.password).encode("utf-16le")
-        ).hexdigest()
+        challenge_response = (
+            challenge
+            + "-"
+            + hashlib.md5(
+                (
+                    challenge
+                    + "-"
+                    + self.password
+                ).encode("utf-16le")
+            ).hexdigest()
+        )
 
         sid_response = requests.get(
             f"http://{self.host}/login_sid.lua",
@@ -33,16 +64,23 @@ import hashlib
 
         response = requests.get(
             f"http://{self.host}/internet/inetstat_monitor.lua",
-            params={"sid": sid},
+            params={
+                "sid": sid,
+            },
             timeout=10,
         )
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(
+            response.text,
+            "html.parser",
+        )
 
         tables = soup.find_all("table")
 
         if len(tables) < 2:
-            raise Exception("DOCSIS Tabellen nicht gefunden")
+            raise Exception(
+                "DOCSIS Tabellen nicht gefunden"
+            )
 
         docsis31_table = tables[0]
         docsis30_table = tables[1]
@@ -60,9 +98,15 @@ import hashlib
             cols = docsis31_rows[1].find_all("td")
 
             data["docsis31"] = {
-                "power": float(cols[3].text.strip().replace(",", ".")),
-                "mer": float(cols[4].text.strip().replace(",", ".")),
-                "uncorrectable": int(cols[7].text.strip()),
+                "power": float(
+                    cols[3].text.strip().replace(",", ".")
+                ),
+                "mer": float(
+                    cols[4].text.strip().replace(",", ".")
+                ),
+                "uncorrectable": int(
+                    cols[7].text.strip()
+                ),
             }
 
         for row in docsis30_rows[1:]:
@@ -73,16 +117,34 @@ import hashlib
                 continue
 
             try:
+
                 data["docsis30"].append(
                     {
                         "channel": cols[0].text.strip(),
-                        "power": float(cols[3].text.strip().replace(",", ".")),
-                        "mse": float(cols[4].text.strip().replace(",", ".")),
-                        "latency": float(cols[5].text.strip().replace(",", ".")),
-                        "correctable": int(cols[6].text.strip()),
-                        "uncorrectable": int(cols[7].text.strip()),
+                        "power": float(
+                            cols[3]
+                            .text.strip()
+                            .replace(",", ".")
+                        ),
+                        "mse": float(
+                            cols[4]
+                            .text.strip()
+                            .replace(",", ".")
+                        ),
+                        "latency": float(
+                            cols[5]
+                            .text.strip()
+                            .replace(",", ".")
+                        ),
+                        "correctable": int(
+                            cols[6].text.strip()
+                        ),
+                        "uncorrectable": int(
+                            cols[7].text.strip()
+                        ),
                     }
                 )
+
             except Exception:
                 pass
 
